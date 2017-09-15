@@ -22,10 +22,10 @@ XENONHD_TARGET_PACKAGE := $(PRODUCT_OUT)/$(XENONHD_PACKAGE)
 .PHONY: bacon
 bacon: $(INTERNAL_OTA_PACKAGE_TARGET)
 	$(hide) ./vendor/xenonhd/build/tools/changelog
-	$(hide) ./vendor/xenonhd/build/tools/ota
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(XENONHD_TARGET_PACKAGE)
 	$(hide) $(MD5SUM) $(XENONHD_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(XENONHD_TARGET_PACKAGE).md5sum
 	$(hide) rm $(INTERNAL_OTA_PACKAGE_TARGET)
+	$(hide) cp -r $(XENONHD_TARGET_PACKAGE) $(ANDROID_BUILD_TOP)/opendelta/last/$(TARGET_DEVICE)/$(XENONHD_PACKAGE)
 	@echo "$(XENONHD_TARGET_PACKAGE)"
 	@echo -e "\a\n================-Package complete-================"
 	@echo "file: $(XENONHD_PACKAGE)"
@@ -33,3 +33,6 @@ bacon: $(INTERNAL_OTA_PACKAGE_TARGET)
 	@echo "size: $(shell ls -lah $(XENONHD_TARGET_PACKAGE) | awk '{ print $$5 }')"
 	@echo -e "==================================================\n"
 	$(hide) jack-admin stop-server
+ifneq ($(OTA_TYPE),Unofficial)
+	$(hide) $(ANDROID_BUILD_TOP)/opendelta.sh
+endif

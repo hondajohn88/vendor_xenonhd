@@ -25,6 +25,7 @@ bacon: $(INTERNAL_OTA_PACKAGE_TARGET)
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(XENONHD_TARGET_PACKAGE)
 	$(hide) $(MD5SUM) $(XENONHD_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(XENONHD_TARGET_PACKAGE).md5sum
 	$(hide) rm $(INTERNAL_OTA_PACKAGE_TARGET)
+	$(hide) rm $(ANDROID_BUILD_TOP)/opendelta/last/$(TARGET_DEVICE)/*.zip
 	$(hide) cp -r $(XENONHD_TARGET_PACKAGE) $(ANDROID_BUILD_TOP)/opendelta/last/$(TARGET_DEVICE)/$(XENONHD_PACKAGE)
 	@echo "$(XENONHD_TARGET_PACKAGE)"
 	@echo -e "\a\n================-Package complete-================"

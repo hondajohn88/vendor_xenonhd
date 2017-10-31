@@ -121,9 +121,15 @@ PRODUCT_PACKAGES += \
     procmem \
     procrank
 
-ifeq ($(WITH_SU),su)
+ifeq ($(ROOT_METHOD),su)
 PRODUCT_PACKAGES += \
     su
+endif
+
+ifeq ($(ROOT_METHOD),magisk)
+PRODUCT_PACKAGES += \
+    Magisk \
+    MagiskManager
 endif
 endif
 
